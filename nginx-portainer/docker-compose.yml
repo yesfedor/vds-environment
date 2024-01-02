@@ -1,0 +1,34 @@
+version: '3'
+
+services:
+  nginx-proxy-manager:
+    image: jc21/nginx-proxy-manager:latest
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "81:81"
+      - "443:443"
+    environment:
+      - VIRTUAL_HOST=npm.iny.su
+      - LETSENCRYPT_HOST=npm.iny.su
+      - LETSENCRYPT_EMAIL=yesfedor.go@gmail.com
+    volumes:
+      - ./data:/data
+      - ./letsencrypt:/etc/letsencrypt
+
+  portainer:
+    image: portainer/portainer
+    restart: unless-stopped
+    environment:
+      - VIRTUAL_HOST=portainer.iny.su
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - portainer_data:/data
+
+networks:
+  default:
+    external:
+      name: nginx-proxy
+
+volumes:
+  portainer_data:
