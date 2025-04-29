@@ -1,0 +1,31 @@
+version: '3.7'
+
+services:
+  gitlab:
+    image: gitlab/gitlab-ce:latest
+    container_name: gitlab-ce
+    restart: always
+    hostname: 'git.fiv.dev'
+    environment:
+      GITLAB_OMNIBUS_CONFIG: |
+        external_url 'https://git.fiv.dev'
+        gitlab_rails['gitlab_shell_ssh_port'] = 8192
+        nginx['listen_port'] = 80
+        nginx['listen_https'] = false
+    ports:
+      - "8190:80"    # HTTP
+      - "8191:443"   # HTTPS (не используется напрямую, так как SSL терминация на NPM)
+      - "8192:22"    # SSH
+    volumes:
+      - ./config:/etc/gitlab
+      - ./logs:/var/log/gitlab
+      - ./data:/var/opt/gitlab
+    networks:
+      - nginx-proxy
+      - gitlab-internal
+
+networks:
+  nginx-proxy:
+    external: true
+  gitlab-internal:
+    driver: bridge
