@@ -1,5 +1,6 @@
 server_name: "web.fiv.dev"
 public_baseurl: "https://web.fiv.dev"
+report_stats: True
 listeners:
   - port: 8008
     bind_addresses: ['::']
