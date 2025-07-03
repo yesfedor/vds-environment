@@ -16,11 +16,10 @@ services:
 
   synapse:
     image: matrixdotorg/synapse:latest
-    command: >
-      sh -c "
-      chown -R synapse:synapse /data &&
-      exec gosu synapse:synapse python -m synapse.app.homeserver --config-path /data/homeserver.yaml
-      "
+    command: [
+      "python", "-m", "synapse.app.homeserver",
+      "--config-path", "/data/homeserver.yaml"
+    ]
     user: "991:991"
     container_name: matrix_synapse
     restart: unless-stopped
