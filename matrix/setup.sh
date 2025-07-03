@@ -3,6 +3,8 @@
 git checkout undo --force
 git checkout main --force
 
+git pull
+
 docker-compose down -v
 rm -rf ./synapse-data/* ./postgres-data/*
 
