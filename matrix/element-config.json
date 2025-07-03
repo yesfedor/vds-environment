@@ -1,9 +1,8 @@
 {
   "default_server_config": {
     "m.homeserver": {
-      "base_url": "https://web.fiv.dev",
+      "base_url": "https://matrix.web.fiv.dev",
       "server_name": "web.fiv.dev"
     }
-  },
-  "base_url": "/app"
+  }
 }
