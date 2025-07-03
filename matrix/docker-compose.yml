@@ -6,6 +6,9 @@ services:
     container_name: matrix_db
     restart: unless-stopped
     environment:
+      POSTGRES_INITDB_ARGS: "--locale=C"
+      LC_COLLATE: "C"
+      LC_CTYPE: "C"
       POSTGRES_USER: matrix
       POSTGRES_PASSWORD: your_db_password
       POSTGRES_DB: synapse
