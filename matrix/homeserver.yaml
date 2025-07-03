@@ -1,8 +1,6 @@
-server_name: "web.fiv.dev"
-public_baseurl: "https://web.fiv.dev"
-report_stats: True
-media_store_path: "/data/media_store"
-uploads_path: "/data/uploads"
+server_name: "web.fiv.dev"  # Основной домен Matrix (должен совпадать с сертификатом)
+public_baseurl: "https://matrix.web.fiv.dev"  # Публичный URL сервера Synapse
+
 listeners:
   - port: 8008
     bind_addresses: ['::']
@@ -21,3 +19,22 @@ database:
     host: matrix_db
     cp_min: 5
     cp_max: 10
+
+# Настройки медиа
+media_store_path: "/data/media_store"
+uploads_path: "/data/uploads"
+max_upload_size: "50M"
+
+# Настройки регистрации (рекомендуется отключить)
+enable_registration: false
+
+# Настройки TURN для звонков
+turn_uris:
+  - "turn:web.fiv.dev:3478?transport=udp"
+  - "turn:web.fiv.dev:3478?transport=tcp"
+turn_shared_secret: "your_turn_secret_key"
+turn_user_lifetime: "1h"
+
+# Дополнительные настройки
+log_config: "/data/web.fiv.dev.log.config"
+pid_file: "/data/homeserver.pid"
