@@ -1,6 +1,7 @@
 server_name: "web.fiv.dev"  # Основной домен Matrix (должен совпадать с сертификатом)
 public_baseurl: "https://matrix.web.fiv.dev"  # Публичный URL сервера Synapse
 report_stats: False
+macaroon_secret_key: "4a9f1c2e5d8b3f7a6c1e9d0f2b8a7c5d6e3f4a1b2c9d0e7f8a6b5c4d3e2f1a0"
 
 listeners:
   - port: 8008
