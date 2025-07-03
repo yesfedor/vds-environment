@@ -19,7 +19,6 @@ database:
     password: "your_db_password"
     database: synapse
     host: matrix_db
-    allow_unsafe_locale: true
     cp_min: 5
     cp_max: 10
 
