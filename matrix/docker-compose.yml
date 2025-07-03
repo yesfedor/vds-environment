@@ -64,10 +64,10 @@ services:
     volumes:
       - ./element-config.json:/app/config.json
     environment:
-      - VIRTUAL_HOST=element.web.fiv.dev
+      - VIRTUAL_HOST=web.fiv.dev
       - VIRTUAL_PORT=80
-      - LETSENCRYPT_HOST=element.web.fiv.dev
-      - LETSENCRYPT_EMAIL=your@email.com
+      - LETSENCRYPT_HOST=web.fiv.dev
+      - LETSENCRYPT_EMAIL=yesfedor.go@gmail.com
     networks:
       - matrix_net
       - default
