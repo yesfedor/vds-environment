@@ -1,0 +1,77 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:13
+    container_name: matrix_db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: matrix
+      POSTGRES_PASSWORD: your_db_password
+      POSTGRES_DB: synapse
+    volumes:
+      - ./postgres-data:/var/lib/postgresql/data
+    networks:
+      - matrix_net
+      - default
+
+  synapse:
+    image: matrixdotorg/synapse:latest
+    container_name: matrix_synapse
+    restart: unless-stopped
+    depends_on:
+      - db
+    expose:
+      - "8008"  # Только для внутреннего доступа (nginx-proxy будет проксировать)
+    volumes:
+      - ./synapse-data:/data
+      - ./homeserver.yaml:/data/homeserver.yaml
+    environment:
+      - SYNAPSE_SERVER_NAME=web.fiv.dev
+      - VIRTUAL_HOST=web.fiv.dev
+      - VIRTUAL_PORT=8008
+      - LETSENCRYPT_HOST=web.fiv.dev
+      - LETSENCRYPT_EMAIL=your@email.com
+    networks:
+      - matrix_net
+      - default
+
+  coturn:
+    image: coturn/coturn:latest
+    container_name: matrix_coturn
+    restart: unless-stopped
+    volumes:
+      - ./turnserver.conf:/etc/turnserver.conf:ro  # Монтируем конфиг Coturn
+    command:
+      - /etc/turnserver.conf  # Используем конфиг-файл вместо CLI-параметров
+    ports:
+      - "3478:3478/tcp"    # TCP для TURN
+      - "3478:3478/udp"    # UDP критичен для звонков!
+      - "5349:5349/tcp"    # TLS (опционально)
+    networks:
+      - matrix_net
+      - default
+
+  element:
+    image: vectorim/element-web:latest
+    container_name: matrix_element
+    restart: unless-stopped
+    expose:
+      - "80"  # Для nginx-proxy
+    volumes:
+      - ./element-config.json:/app/config.json
+    environment:
+      - VIRTUAL_HOST=element.web.fiv.dev
+      - VIRTUAL_PORT=80
+      - LETSENCRYPT_HOST=element.web.fiv.dev
+      - LETSENCRYPT_EMAIL=your@email.com
+    networks:
+      - matrix_net
+      - default
+
+networks:
+  default:
+    external:
+      name: nginx-proxy
+  matrix_net:
+    driver: bridge

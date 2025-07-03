@@ -19,12 +19,6 @@ docker run -d --name gitlab-runner \
 ```shell
 docker exec -it gitlab-runner \
 gitlab-runner register \
-  --non-interactive \
   --url "https://git.fiv.dev/" \
-  --registration-token "glrt-dDoxCnU6MWHG3y0Tllec7-diBePn_YAQ.0w1inxryp" \
-  --executor "docker" \
-  --docker-image alpine:latest \
-  --description "docker-runner" \
-  --tag-list "docker,linux" \
-  --run-untagged="true"
+  --token "glrt-dDoxCnU6MeQ9iltE0qQcS4qGrmSYdlUQ.0w08ddlyf"
 ```

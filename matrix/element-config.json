@@ -1,0 +1,9 @@
+{
+  "default_server_config": {
+    "m.homeserver": {
+      "base_url": "https://web.fiv.dev",
+      "server_name": "web.fiv.dev"
+    }
+  },
+  "base_url": "/app"
+}

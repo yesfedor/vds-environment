@@ -1,0 +1,9 @@
+public_baseurl: "https://web.fiv.dev"
+listeners:
+  - port: 8008
+    bind_addresses: ['::']
+    type: http
+    x_forwarded: true
+    resources:
+      - names: [client, federation]
+        compress: false
