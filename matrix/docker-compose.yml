@@ -28,10 +28,12 @@ services:
       - ./homeserver.yaml:/data/homeserver.yaml
     environment:
       - SYNAPSE_SERVER_NAME=web.fiv.dev
+      - SYNAPSE_REPORT_STATS=no
       - VIRTUAL_HOST=web.fiv.dev
       - VIRTUAL_PORT=8008
       - LETSENCRYPT_HOST=web.fiv.dev
       - LETSENCRYPT_EMAIL=your@email.com
+
     networks:
       - matrix_net
       - default

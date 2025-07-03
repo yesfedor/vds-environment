@@ -1,3 +1,4 @@
+server_name: "web.fiv.dev"
 public_baseurl: "https://web.fiv.dev"
 listeners:
   - port: 8008
@@ -7,3 +8,13 @@ listeners:
     resources:
       - names: [client, federation]
         compress: false
+
+database:
+  name: psycopg2
+  args:
+    user: matrix
+    password: "your_db_password"
+    database: synapse
+    host: matrix_db
+    cp_min: 5
+    cp_max: 10
