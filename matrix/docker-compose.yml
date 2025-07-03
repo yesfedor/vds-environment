@@ -16,7 +16,6 @@ services:
 
   synapse:
     image: matrixdotorg/synapse:latest
-    command: bash -c "chmod -R 777 /data && python -m synapse.app.homeserver --config-path /data/homeserver.yaml"
     container_name: matrix_synapse
     restart: unless-stopped
     depends_on:
