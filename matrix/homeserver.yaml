@@ -1,6 +1,8 @@
 server_name: "web.fiv.dev"
 public_baseurl: "https://web.fiv.dev"
 report_stats: True
+media_store_path: "/data/media_store"
+uploads_path: "/data/uploads"
 listeners:
   - port: 8008
     bind_addresses: ['::']

@@ -16,6 +16,7 @@ services:
 
   synapse:
     image: matrixdotorg/synapse:latest
+    user: "991:991"
     container_name: matrix_synapse
     restart: unless-stopped
     depends_on:
@@ -24,8 +25,12 @@ services:
       - "8008"
     volumes:
       - ./synapse-data:/data
+      - ./synapse-data/media_store:/data/media_store
+      - ./synapse-data/uploads:/data/uploads
       - ./homeserver.yaml:/data/homeserver.yaml
     environment:
+      - UID=991
+      - GID=991
       - SYNAPSE_SERVER_NAME=web.fiv.dev
       - SYNAPSE_REPORT_STATS=no
       - SYNAPSE_CONFIG_PATH=/data/homeserver.yaml
