@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 git checkout undo --force
-git checkout master --force
+git checkout main --force
 
 docker-compose down -v
 rm -rf ./synapse-data/* ./postgres-data/*
