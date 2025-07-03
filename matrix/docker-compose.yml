@@ -17,8 +17,11 @@ services:
   synapse:
     image: matrixdotorg/synapse:latest
     command: [
-      "python", "-m", "synapse.app.homeserver",
-      "--config-path", "/data/homeserver.yaml"
+      "/usr/local/bin/python",
+      "-m",
+      "synapse.app.homeserver",
+      "--config-path",
+      "/data/homeserver.yaml"
     ]
     user: "991:991"
     container_name: matrix_synapse
