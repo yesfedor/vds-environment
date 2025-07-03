@@ -33,6 +33,7 @@ services:
       - VIRTUAL_PORT=8008
       - LETSENCRYPT_HOST=web.fiv.dev
       - LETSENCRYPT_EMAIL=your@email.com
+      - SYNAPSE_CONFIG_PATH=/data/homeserver.yaml
 
     networks:
       - matrix_net
