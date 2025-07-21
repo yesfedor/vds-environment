@@ -5,7 +5,7 @@ services:
       context: .
       dockerfile: Dockerfile
     ports:
-      - 3333:3306
+      - '3306:3306'
     volumes:
       - ./db_data:/var/lib/mysql
 
@@ -17,6 +17,12 @@ services:
       - PMA_ARBITRARY=1
     links:
       - db:mysql
+    networks:
+      - nginx-proxy
 
 volumes:
   db_data:
+
+networks:
+  nginx-proxy:
+    external: true

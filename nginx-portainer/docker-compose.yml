@@ -23,6 +23,7 @@ services:
       - ./letsencrypt:/etc/letsencrypt
 
     networks:
+      - nginx-internal
       - nginx-proxy
 
   portainer:
@@ -45,6 +46,10 @@ services:
       MARIADB_AUTO_UPGRADE: '1'
     volumes:
       - ./mysql:/var/lib/mysql
+    networks:
+      - nginx-internal
+      - nginx-proxy
 
 networks:
   nginx-proxy:
+  nginx-internal:
