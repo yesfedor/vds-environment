@@ -1,20 +1,29 @@
 version: '3'
 
 services:
-  nginx-proxy-manager:
-    image: jc21/nginx-proxy-manager:latest
+  manager:
+    image: 'jc21/nginx-proxy-manager:latest'
     restart: unless-stopped
     ports:
-      - "80:80"
-      - "81:81"
-      - "443:443"
+      - '80:80' # Public HTTP Port
+      - '443:443' # Public HTTPS Port
+      - '81:81' # Admin Web Port
+      # Add any other Stream port you want to expose
+      # - '21:21' # FTP
+
     environment:
-      - VIRTUAL_HOST=npm.iny.su
-      - LETSENCRYPT_HOST=npm.iny.su
-      - LETSENCRYPT_EMAIL=yesfedor.go@gmail.com
+      DB_MYSQL_HOST: 'db'
+      DB_MYSQL_PORT: 3306
+      DB_MYSQL_USER: 'npm'
+      DB_MYSQL_PASSWORD: 'npm'
+      DB_MYSQL_NAME: 'npm'
+
     volumes:
       - ./data:/data
       - ./letsencrypt:/etc/letsencrypt
+
+    networks:
+      - nginx-proxy
 
   portainer:
     image: portainer/portainer
@@ -23,12 +32,19 @@ services:
       - VIRTUAL_HOST=portainer.iny.su
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      - portainer_data:/data
+      - ./portainer_data:/data
+
+  db:
+    image: 'jc21/mariadb-aria:latest'
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: 'npm'
+      MYSQL_DATABASE: 'npm'
+      MYSQL_USER: 'npm'
+      MYSQL_PASSWORD: 'npm'
+      MARIADB_AUTO_UPGRADE: '1'
+    volumes:
+      - ./mysql:/var/lib/mysql
 
 networks:
-  default:
-    external:
-      name: nginx-proxy
-
-volumes:
-  portainer_data:
+  nginx-proxy:

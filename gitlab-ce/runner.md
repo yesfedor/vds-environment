@@ -19,6 +19,6 @@ docker run -d --name gitlab-runner \
 ```shell
 docker exec -it gitlab-runner \
 gitlab-runner register \
-  --url "https://git.fiv.dev/" \
-  --token "glrt-dDoxCnU6MeQ9iltE0qQcS4qGrmSYdlUQ.0w08ddlyf"
+  --url "https://{GITLAB_INSTANCE}/" \
+  --token "{TOKEN}"
 ```
