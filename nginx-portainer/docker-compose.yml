@@ -34,6 +34,8 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - ./portainer_data:/data
+    networks:
+      nginx-proxy:
 
   db:
     image: 'jc21/mariadb-aria:latest'
