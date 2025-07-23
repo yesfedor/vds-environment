@@ -10,21 +10,23 @@ services:
       - '443:443' # Public HTTPS Port
       - '81:81' # Admin Web Port
       # - '21:21' # FTP
-
     environment:
       VIRTUAL_HOST: 'lbs.iny.su'
       DB_MYSQL_HOST: 'db'
       DB_MYSQL_PORT: 3306
-      DB_MYSQL_USER: 'npm'
-      DB_MYSQL_PASSWORD: 'npm'
-      DB_MYSQL_NAME: 'npm'
-
+      DB_MYSQL_USER: 'lbs'
+      DB_MYSQL_PASSWORD: 'lbs'
+      DB_MYSQL_NAME: 'lbs'
     volumes:
       - ./data:/data
       - ./letsencrypt:/etc/letsencrypt
-
     networks:
       - nginx-proxy
+    logging:
+      driver: "json-file"
+      options:
+        max-size: '5m'
+        max-file: '3'
 
   portainer:
     container_name: 'portainer'
@@ -37,21 +39,47 @@ services:
       - ./portainer_data:/data
     networks:
       nginx-proxy:
+    logging:
+      driver: "json-file"
+      options:
+        max-size: '5m'
+        max-file: '3'
 
   db:
     container_name: 'mariadb-aria'
     image: 'jc21/mariadb-aria:latest'
     restart: unless-stopped
     environment:
-      MYSQL_ROOT_PASSWORD: 'npm'
-      MYSQL_DATABASE: 'npm'
-      MYSQL_USER: 'npm'
-      MYSQL_PASSWORD: 'npm'
+      MYSQL_ROOT_PASSWORD: 'lbs'
+      MYSQL_DATABASE: 'lbs'
+      MYSQL_USER: 'lbs'
+      MYSQL_PASSWORD: 'lbs'
       MARIADB_AUTO_UPGRADE: '1'
     volumes:
       - ./mysql:/var/lib/mysql
     networks:
       - nginx-proxy
+    logging:
+      driver: "json-file"
+      options:
+        max-size: '5m'
+        max-file: '3'
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+#    ports:
+#      - '80:80'
+    environment:
+      - PMA_ARBITRARY=1
+    links:
+      - db:mysql
+    networks:
+      - nginx-proxy
+    logging:
+      driver: "json-file"
+      options:
+        max-size: '5m'
+        max-file: '3'
 
 networks:
   nginx-proxy:
