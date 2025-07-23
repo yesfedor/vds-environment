@@ -66,6 +66,7 @@ services:
         max-file: '3'
 
   phpmyadmin:
+    container_name: 'phpmyadmin'
     image: phpmyadmin/phpmyadmin
 #    ports:
 #      - '80:80'
